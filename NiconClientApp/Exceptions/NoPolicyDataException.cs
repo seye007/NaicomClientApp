@@ -1,4 +1,4 @@
-﻿namespace NiconClientApp.Exceptions
+﻿namespace NiacomClientApp.Exceptions
 {
     public class NoPolicyDataException : Exception
     {

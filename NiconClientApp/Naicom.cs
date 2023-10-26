@@ -1,4 +1,4 @@
-﻿namespace NiconClientApp
+﻿namespace NiacomClientApp
 {
 	public class Naicom
 	{

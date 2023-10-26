@@ -1,8 +1,5 @@
-﻿using NiconClientApp;
-using System.Data.SqlClient;
-using (var connection = new SqlConnection(Constants.ConnectionString))
-{
-	await connection.OpenAsync();
-	NaicomService.Connection = connection;
-    await NaicomService.Execute();
-}
+﻿using NiacomClientApp;
+
+await NaicomService.Execute();
+Console.WriteLine("Press any key to terminate the program");
+Console.ReadLine();

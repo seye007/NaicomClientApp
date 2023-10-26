@@ -1,4 +1,4 @@
-﻿namespace NiconClientApp.Exceptions
+﻿namespace NiacomClientApp.Exceptions
 {
     internal class ProcessPolicyException : Exception
     {
