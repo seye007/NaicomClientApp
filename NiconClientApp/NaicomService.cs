@@ -92,17 +92,16 @@ namespace NiacomClientApp
 			try
 			{
 				var naicomResponse = JsonSerializer.Deserialize<NaicomPolicyResponse>(naicomResponseStr);
-				if (naicomResponse is null) throw new ProcessPolicyException("Naicom response can not be null");
-				if (!naicomResponse.IsFound) throw new ProcessPolicyException("Naicom response not found");
+				if (naicomResponse is null) throw new ProcessPolicyException("Naicom response cannot be null");
 				string productName = naicomResponse.DataGroup?.SelectMany(x => x.AttArray)
 									 .FirstOrDefault(x => x.Name == "Insurance Type")?.Value ?? string.Empty;
 				var insertParameter = new
 				{
-					PolicyNumber = naicom.PolicyNumber,
-					PolicyUniqueID = naicom.PolicyUniqueID,
-					JsonData = naicomResponseStr,
-					ProcessingStatus = "NEW",
-					ProductName = productName
+			           PolicyNumber = naicom.PolicyNumber,
+				   PolicyUniqueID = naicom.PolicyUniqueID,
+				   JsonData = naicomResponseStr,
+				   ProductName = productName,
+				   ProcessingStatus = naicomResponse.IsFound ? "NEW" : "Not Found"
 				};
 				// Insert the status to true in the database
 				await _connection.ExecuteAsync(
