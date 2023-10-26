@@ -8,10 +8,10 @@ namespace NiacomClientApp
 {
 	class NaicomService
 	{
-		public static SqlConnection Connection { get; set; }
+		private static SqlConnection _connection { get; set; }
 		public static async Task Execute()
 		{
-			using (Connection = new SqlConnection(Constants.ConnectionString))
+			using (_connection = new SqlConnection(Constants.ConnectionString))
 			{
 				while (true)
 				{
@@ -61,7 +61,7 @@ namespace NiacomClientApp
 			try
 			{
 				var parameters = new { Status = false };
-				var naicom = await Connection.QueryFirstOrDefaultAsync<Naicom>(
+				var naicom = await _connection.QueryFirstOrDefaultAsync<Naicom>(
 				   "GetNaiconByStatus",
 				   parameters,
 				   commandType: CommandType.StoredProcedure) ?? throw new NoPolicyDataException("No policy with status 'false'.");
@@ -105,7 +105,7 @@ namespace NiacomClientApp
 					ProductName = productName
 				};
 				// Insert the status to true in the database
-				await Connection.ExecuteAsync(
+				await _connection.ExecuteAsync(
 					"InsertNaiconData",
 					insertParameter,
 					commandType: CommandType.StoredProcedure);
@@ -115,7 +115,7 @@ namespace NiacomClientApp
 					Status = true
 				};
 				//Update the status to true in the database
-				await Connection.ExecuteAsync(
+				await _connection.ExecuteAsync(
 					"UpdateSpoolStatus",
 					updateParameter,
 					commandType: CommandType.StoredProcedure);
